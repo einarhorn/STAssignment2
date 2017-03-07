@@ -42,9 +42,21 @@ public class Task22 {
     
     
     
-	// Fails m_1
+	// m_1
     @Test
-    public void TemplateEngineSpec6Test_EmptyTemplateInEngine()){
+    public void Part22NewTest_SpaceBetweenTemplateChar(){
+
+    	map.store("hi", "y", false);
+    	String result = engine.evaluate("$x{hi}hello", map, "keep-unmatched");
+    	
+    	assertEquals("$x{hi}hello",result);
+    }
+    
+    
+	
+	// m_2
+    @Test
+    public void Part22NewTest_EmptyTemplateInEngine(){
 
     	String result = engine.evaluate("${}hello", map, "delete-unmatched");
     	
@@ -53,9 +65,6 @@ public class Task22 {
     
     
 	
-	
-	// Nothing m_2
-
     
     // m_3
     // Spec 5 - Map should contain both values evern thought the keys are identical. Different due to value and boolean
