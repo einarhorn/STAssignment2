@@ -7,9 +7,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import st.EntryMap;
-import st.TemplateEngine;
-
 
 public class Task22 {
 
@@ -125,7 +122,7 @@ public class Task22 {
     // m_7 - Complex string fails this one as well
     
     
-    // m_8 - Complex string fails this one as well
+    // m_8 - Complex string fails this one as well (It throws an error)
     
     
     // m_9 - Complex string fails this one as well
