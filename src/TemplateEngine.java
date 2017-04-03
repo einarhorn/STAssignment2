@@ -11,7 +11,7 @@ public class TemplateEngine {
 
     private static final String MM_KEEP = "keep-unmatched";
     private static final String MM_DELETE = "delete-unmatched";
-
+    private static final String MM_OPTIMIZATION = "optimization";
     public TemplateEngine(){
 
     }
@@ -24,12 +24,29 @@ public class TemplateEngine {
             matchingMode = MM_DELETE;
         }
 
-        HashSet<Template> templates = identifyTemplates(templateString);
+     
+        Result result;
+        if(matchingMode.equals(MM_OPTIMIZATION)){
+        	
+        	HashSet<Template> templates1 = identifyTemplates(templateString);
+        	HashSet<Template> templates2 = identifyTemplates(templateString);
+            ArrayList<Template> sortedTemplates1 = sortTemplates(templates1);
+            ArrayList<Template> sortedTemplates2 = sortTemplates(templates2);
+            
+        	String template1 = templateString;
+        	String template2 = templateString;
+        
+         	Result resultDelete = instantiate(template1, sortedTemplates1, entryMap.getEntries(), MM_DELETE);
+        	Result resultKeep = instantiate(template2, sortedTemplates2, entryMap.getEntries(), MM_KEEP);
+        	result = resultDelete.getTemplatesReplaced() > resultKeep.getTemplatesReplaced() ? resultDelete : resultKeep;
+        	
+        }else {
+        	HashSet<Template> templates = identifyTemplates(templateString);
 
-        ArrayList<Template> sortedTemplates = sortTemplates(templates);
-
-        Result result = instantiate(templateString, sortedTemplates, entryMap.getEntries(), matchingMode);
-
+            ArrayList<Template> sortedTemplates = sortTemplates(templates);
+        	result = instantiate(templateString, sortedTemplates, entryMap.getEntries(), matchingMode);
+        }
+        
         return result.getInstancedString();
     }
 
@@ -55,6 +72,10 @@ public class TemplateEngine {
         }
         if (matchingMode.equals(MM_DELETE)){
             return Boolean.TRUE;
+        }
+        if (matchingMode.equals(MM_OPTIMIZATION))
+        {
+        	return Boolean.TRUE;
         }
         return Boolean.FALSE;
     }
